@@ -13,11 +13,22 @@ function addList(){
 	if (listName == null || listName == "") {
 		listItem.innerText = "unnamed list.";
 	};
+
+	var taskName = prompt("Please enter the name of this list", "Enter your task here.");
+	if (taskName != null) {
+		taskItem.innerText = taskName;
+	};
+	if (taskName == null || taskName == "") {
+		taskItem.innerText = "unnamed task.";
+	};
+
 	//listItem.innerText = "dit is de lijst nummer " + (listNumber+1);
 	removeList.innerText = "Remove list";
 	removeList.setAttribute("onclick", "removeMyList(" + listNumber + ")");
 	renameList.innerText = "Rename list";
 	renameList.setAttribute("onclick", "renameMyList(" + listNumber + ")");
+	addTask.innerText = "Add a task";
+	addTask.setAttribute("onclick", "addTask(" + listNumber + ")");
 	document.getElementById("listGroup").appendChild(makeList);
 	makeList.appendChild(listItem);
 	makeList.appendChild(addTask);
@@ -50,3 +61,7 @@ function renameMyList(whichList) {
 		alert("please enter something to change the list name.");
 	};
 }
+
+function addTask(whatList) {
+
+};
