@@ -13,15 +13,6 @@ function addList(){
 	if (listName == null || listName == "") {
 		listItem.innerText = "unnamed list.";
 	};
-
-	var taskName = prompt("Please enter the name of this list", "Enter your task here.");
-	if (taskName != null) {
-		taskItem.innerText = taskName;
-	};
-	if (taskName == null || taskName == "") {
-		taskItem.innerText = "unnamed task.";
-	};
-
 	//listItem.innerText = "dit is de lijst nummer " + (listNumber+1);
 	removeList.innerText = "Remove list";
 	removeList.setAttribute("onclick", "removeMyList(" + listNumber + ")");
@@ -63,5 +54,14 @@ function renameMyList(whichList) {
 }
 
 function addTask(whatList) {
-
+	var taskGroup = document.createElement("div");
+	var taskItem = document.createElement("p");
+	var taskName = prompt("Please enter the name of this list", "Enter your task here.");
+	if (taskName != null) {
+		taskItem.innerText = taskName;
+	};
+	if (taskName == null || taskName == "") {
+		taskItem.innerText = "unnamed task.";
+	};
+	document.getElementById("list"+whatList).appendChild(taskItem);
 };
