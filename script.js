@@ -1,8 +1,9 @@
 var listNumber = 0;
+var taskNumber = 0;
 
 function addList(){
 	var makeList = document.createElement("div");
-	var listItem = document.createElement("p");
+	var listItem = document.createElement("h1");
 	var addTask = document.createElement("button");
 	var renameList = document.createElement("button");
 	var removeList = document.createElement("button");
@@ -54,8 +55,18 @@ function renameMyList(whichList) {
 }
 
 function addTask(whatList) {
-	var taskGroup = document.createElement("div");
+	//checkForTask(whatList)
+
+	var currentTaskNumber = 0;
+	while (document.body.contains(document.getElementById("taskList" + whatList + "taskNumber" + currentTaskNumber))){
+		currentTaskNumber++;
+		checkForTask(whatList);
+		console.log(currentTaskNumber);
+	}
+	taskNumber = currentTaskNumber;
+	console.log(taskNumber);
 	var taskItem = document.createElement("p");
+	taskItem.setAttribute("id", "tasklist" + whatList + "task" + taskNumber);
 	var taskName = prompt("Please enter the name of this list", "Enter your task here.");
 	if (taskName != null) {
 		taskItem.innerText = taskName;
@@ -65,3 +76,14 @@ function addTask(whatList) {
 	};
 	document.getElementById("list"+whatList).appendChild(taskItem);
 };
+
+function checkForTask(whatList) {
+	var currentTaskNumber = 0;
+	while (document.body.contains(document.getElementById("taskList" + whatList + "taskNumber" + taskNumber))){
+		currentTaskNumber++;
+		checkForTask(whatList);
+		console.log(currentTaskNumber);
+	}
+	taskNumber = currentTaskNumber;
+	console.log(taskNumber);
+}
