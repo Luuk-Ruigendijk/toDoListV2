@@ -58,9 +58,9 @@ function addTask(whatList) {
 	//checkForTask(whatList)
 
 	var currentTaskNumber = 0;
-	while (document.body.contains(document.getElementById("taskList" + whatList + "taskNumber" + currentTaskNumber))){
+	while (document.body.contains(document.getElementById("tasklist" + whatList + "task" + currentTaskNumber))){
 		currentTaskNumber++;
-		checkForTask(whatList);
+		//checkForTask(whatList);
 		console.log(currentTaskNumber);
 	}
 	taskNumber = currentTaskNumber;
