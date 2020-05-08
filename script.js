@@ -23,9 +23,11 @@ function loadLists(){
 		}
 
 	};
-	xhttp.open("GET", "backend.php", true);
+	xhttp.open("GET", "loadLists.php", true);
 	xhttp.send();
 }
+
+
 
 loadLists()
 
@@ -41,7 +43,7 @@ function addList(){
       			
       		}
     	};
-    xmlhttp.open("GET", "addList.php");
+    xmlhttp.open("GET", "addList.php?theName="+tableNamePrompt);
     xmlhttp.send();
   	}
 }
