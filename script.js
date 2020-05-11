@@ -46,4 +46,6 @@ function addList(){
     xmlhttp.open("GET", "addList.php?theName="+tableNamePrompt);
     xmlhttp.send();
   	}
+  	setTimeout(loadLists(), 500)
+  	
 }
