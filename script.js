@@ -13,9 +13,14 @@ function loadLists(){
 	    	lists = JSON.parse(this.response);
 	    	console.dir(lists);
 	    	for(list of lists){
-	    		let el = document.createElement('div');
-	    		el.innerHTML = list.listname;
-	    		document.getElementById('allLists').appendChild(el);
+	    		let newList = document.createElement('div');
+	    		newList.innerHTML = list.listname;
+	    		newList.setAttribute("listsId", list.listsId);
+	    		document.getElementById('allLists').appendChild(newList);
+	    		let removeListButton = document.createElement('button');
+	    		removeListButton.innerHTML = "remove list";
+	    		removeListButton.setAttribute("onclick", "removeList("+list.listsId+")");
+	    		newList.appendChild(removeListButton);
 	    	}
 	    	console.log("onreadystatechange");
 	    	//console.dir(this);
@@ -48,4 +53,16 @@ function addList(){
   	}
   	setTimeout(loadLists(), 500)
   	
+}
+
+function removeList(list){
+	let listRemoval = document.getElementById(list);
+	if (listRemoval.hasChildNodes() == true) {
+		while (listRemoval.hasChildNodes()) {  
+			listRemoval.removeChild(listRemoval.firstChild);
+		}
+	}
+	listRemoval = document.getElementById(list);
+	listRemoval.parentNode.removeChild(list);
+
 }
