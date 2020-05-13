@@ -102,11 +102,30 @@ function addTask(listsId){
 }
 
 function removeList(list){
-	let listRemoval = document.getElementById("listsId"+list);
+	let listRemoval = document.getElementById(list);
 	if (listRemoval.hasChildNodes() === true) {
 		while (listRemoval.hasChildNodes()) {  
 			listRemoval.removeChild(listRemoval.firstChild);
 		}
 	}
 	listRemoval.remove();
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  			removeListTasks(list);
+  		}
+	};
+    xmlhttp.open("GET", "deleteList.php?idList="+list);
+    xmlhttp.send();
+}
+
+function removeListTasks(list){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  			loadLists();
+  		}
+	};
+    xmlhttp.open("GET", "deleteListTasks.php?idList="+list);
+    xmlhttp.send();
 }
