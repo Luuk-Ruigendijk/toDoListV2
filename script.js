@@ -24,6 +24,11 @@ function loadLists(){
 	    		addTaskButton.setAttribute("onclick", "addTask("+list.listsId+")");
 	    		newList.appendChild(addTaskButton);
 
+	    		let renameListButton = document.createElement('button');
+	    		renameListButton.innerHTML = "rename list";
+	    		renameListButton.setAttribute("onclick", "renameList("+list.listsId+")");
+	    		newList.appendChild(renameListButton);
+
 	    		let removeListButton = document.createElement('button');
 	    		removeListButton.innerHTML = "remove list";
 	    		removeListButton.setAttribute("onclick", "removeList("+list.listsId+")");
@@ -97,6 +102,23 @@ function addTask(listsId){
       		}
     	};
     xmlhttp.open("GET", "addTask.php?theName="+taskNamePrompt+"&listsId="+listsId);
+    xmlhttp.send();
+  	}
+}
+
+function renameList(listsId){
+	var listNamePrompt = prompt("Please enter the new name of this list.", "different name");
+	if (listNamePrompt == null || listNamePrompt == "") {
+  		 alert("Please insert a name.");
+  	}
+  	else {
+  		var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.onreadystatechange = function() {
+      		if (this.readyState == 4 && this.status == 200) {
+      			loadLists();
+      		}
+    	};
+    xmlhttp.open("GET", "renameList.php?theName="+listNamePrompt+"&listsId="+listsId);
     xmlhttp.send();
   	}
 }
