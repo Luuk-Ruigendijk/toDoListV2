@@ -1,5 +1,8 @@
 .list {
 	border-style: solid;
-	width: 10%;
+	width: 13%;
 	display: inline-block;
+	margin-right: 5px;
+	padding: 5px;
+	padding-top: 0px;
 }

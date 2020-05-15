@@ -8,7 +8,7 @@
 		<div id="allLists">
 			
 		</div>
-		<p>this is a list of things to do.</p>
+		<p>Press the button below to add a list.</p>
 		<div id="addList">
 			<button onclick="addList()">Add list</button>
 		</div>

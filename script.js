@@ -9,11 +9,12 @@ function loadLists(){
 	    	console.dir(lists);
 	    	for(list of lists){
 	    		let newList = document.createElement('div');
-	    		newList.innerHTML = list.listname;
+	    		let addListName = document.createElement('h2');
+	    		addListName.innerHTML = list.listname;
 	    		newList.id = list.listsId;
-
+	    		newList.appendChild(addListName);
+	    		newList.classList.add("list");
 	    		document.getElementById('allLists').appendChild(newList);
-
 				let addTaskButton = document.createElement('button');
 	    		addTaskButton.innerHTML = "add task";
 	    		addTaskButton.setAttribute("onclick", "addTask("+list.listsId+")");

@@ -18,10 +18,10 @@ USE `todolist`;
 
 -- Dumping structure for table todolist.lists
 CREATE TABLE IF NOT EXISTS `lists` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `listsId` int(11) NOT NULL AUTO_INCREMENT,
   `listname` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`listsId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -29,8 +29,9 @@ CREATE TABLE IF NOT EXISTS `lists` (
 CREATE TABLE IF NOT EXISTS `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `taskname` varchar(250) NOT NULL,
+  `listsId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
