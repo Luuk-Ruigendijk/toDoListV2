@@ -4,7 +4,6 @@ function loadLists(){
 	xmlhttp.onreadystatechange = function() {
 		document.getElementById('allLists').innerHTML = "";
 	    if (this.readyState == 4 && this.status == 200) {
-			console.log(this.response);
 	    	lists = JSON.parse(this.response);
 	    	console.dir(lists);
 	    	for(list of lists){
@@ -30,9 +29,6 @@ function loadLists(){
 	    		removeListButton.setAttribute("onclick", "removeList("+list.listsId+")");
 	    		newList.appendChild(removeListButton);
 	    	}
-	    	console.log("onreadystatechange");
-	    	//console.dir(this);
-	        //document.getElementById("demo").innerHTML = this.responseText;
 			loadTasks();
 		}
 	};
@@ -45,7 +41,6 @@ function loadTasks(){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			console.log(this.response);
 		    tasks = JSON.parse(this.response);
 			if (mainList.hasChildNodes() === true) {
 		    	for (let list of mainList.childNodes){
