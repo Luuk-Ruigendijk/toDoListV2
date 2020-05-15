@@ -1,13 +1,8 @@
 function loadLists(){
-	var xhttp = new XMLHttpRequest();
+	var xmlhttp = new XMLHttpRequest();
 
-	xhttp.onreadystatechange = function() {
-		var childRemoval = document.getElementById('allLists');
-		if (childRemoval.hasChildNodes() == true) {
-			while (childRemoval.hasChildNodes()) {  
-				childRemoval.removeChild(childRemoval.firstChild);
-			}
-		}
+	xmlhttp.onreadystatechange = function() {
+		document.getElementById('allLists').innerHTML = "";
 	    if (this.readyState == 4 && this.status == 200) {
 			console.log(this.response);
 	    	lists = JSON.parse(this.response);
@@ -37,34 +32,42 @@ function loadLists(){
 	    	console.log("onreadystatechange");
 	    	//console.dir(this);
 	        //document.getElementById("demo").innerHTML = this.responseText;
+			loadTasks();
 		}
-
 	};
-	xhttp.open("GET", "loadLists.php", true);
-	xhttp.send();
-	loadTasks();
+	xmlhttp.open("GET", "loadLists.php", true);
+	xmlhttp.send();
 }
 
 function loadTasks(){
-	var mainList = document.getElementById('allLists').childNodes;
+	var mainList = document.getElementById('allLists');
 	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log(this.response);
+		    tasks = JSON.parse(this.response);
+			if (mainList.hasChildNodes() === true) {
+		    	for (let list of mainList.childNodes){
+		    		for (let task of tasks){
+		    			if (task.listsId == list.id) {
+		    				let newTaskElement = document.createElement('div');
+							newTaskElement.innerHTML = task.taskname;
+							list.appendChild(newTaskElement);
 
-	if (this.readyState == 4 && this.status == 200) {
-		console.log(this.response);
-	    tasks = JSON.parse(this.response);
+							let renameTaskButton = document.createElement('button');
+				    		renameTaskButton.innerHTML = "rename task";
+				    		renameTaskButton.setAttribute("onclick", "renameTask("+task.id+")");
+				    		list.appendChild(renameTaskButton);
 
-	    if (mainList.hasChildNodes() === true) {
-	    	for (var listNumber = 0; listNumber < mainList.length; listNumber++) {
-	    		for(task of tasks){
-	    			if (task.listsId == mainList[listNumber].id) {
-	    				let newTask = document.createElement('div');
-						newTask.innerHTML = task.taskname;
-						newTask.id = "listId"+mainList[listNumber]+"taskId"+task.id;
-						mainList[listNumber].appendChild(newTask);
-	    			}
-				} 
+				    		let removeTaskButton = document.createElement('button');
+				    		removeTaskButton.innerHTML = "remove task";
+				    		removeTaskButton.setAttribute("onclick", "removeTask("+task.id+")");
+				    		list.appendChild(removeTaskButton);
+		    			}
+		    		}
+		    	}
 	    	}
-	    }
+		}
 	}
 	xmlhttp.open("GET", "loadTasks.php");
     xmlhttp.send();
@@ -123,6 +126,23 @@ function renameList(listsId){
   	}
 }
 
+function renameTask(id){
+	var taskNamePrompt = prompt("Please enter the new name of this task.", "different name");
+	if (taskNamePrompt == null || taskNamePrompt == "") {
+  		 alert("Please insert a name.");
+  	}
+  	else {
+  		var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.onreadystatechange = function() {
+      		if (this.readyState == 4 && this.status == 200) {
+      			loadLists();
+      		}
+    	};
+    xmlhttp.open("GET", "renameTask.php?theName="+taskNamePrompt+"&id="+id);
+    xmlhttp.send();
+  	}
+}
+
 function removeList(list){
 	let listRemoval = document.getElementById(list);
 	if (listRemoval.hasChildNodes() === true) {
@@ -149,5 +169,16 @@ function removeListTasks(list){
   		}
 	};
     xmlhttp.open("GET", "deleteListTasks.php?idList="+list);
+    xmlhttp.send();
+}
+
+function removeTask(id){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  			loadLists();
+  		}
+	};
+    xmlhttp.open("GET", "deleteTask.php?id="+id);
     xmlhttp.send();
 }

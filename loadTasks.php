@@ -1,10 +1,9 @@
 <?php
 
+// get alle tasks for alle lists
+
     //echo "this is an echo from the server...";
     //echo $_GET['name'];
-
-	echo $_GET['listsId'];
-
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -20,13 +19,9 @@
         //echo "Connection failed: " . $e->getMessage();
         }
 
-        $listsId = $_GET['listsId'];
-
         $sql = 'SELECT * FROM tasks';
 
         $statement = $conn->prepare($sql);	
-
-        $statement->bindParam(':listsId', $listsId, PDO::PARAM_STR, 12);
 
         $statement->execute();
 
