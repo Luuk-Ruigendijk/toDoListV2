@@ -1,0 +1,6 @@
+moet gedaan worden
+
+status neerzetten (af/nog niet af)
+datum neerzetten voor wanneer het af moet
+comments neerzetten
+dropdown list

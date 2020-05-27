@@ -28,8 +28,8 @@
     $success = $statement->execute();
 
     if ($success) {
-        echo "New record created successfully";
+        echo '{"message" : "New record created successfully"}';
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo '{"message" : "Error: " . $sql . "<br>" . $conn->error}';
     }
 ?>

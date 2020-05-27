@@ -3,6 +3,7 @@
 //echo "this is an echo from the server...";
     echo $_GET['theName'];
     echo $_GET['listsId'];
+    echo $_GET['theTime'];
 
     $servername = "localhost";
     $username = "root";
@@ -18,12 +19,14 @@
     }
     $theName = $_GET['theName'];
     $listsId = $_GET['listsId'];
+    $theTime = $_GET['theTime'];
 
-    $sql = "INSERT INTO tasks (taskname, listsId) VALUES (:theName, :listsId)";
+    $sql = "INSERT INTO tasks (taskname, listsId, requiredTime) VALUES (:theName, :listsId, :theTime)";
 
     $statement = $conn->prepare($sql);
     $statement->bindParam(':theName', $theName, PDO::PARAM_STR, 12);
     $statement->bindParam(':listsId', $listsId, PDO::PARAM_STR, 12);
+    $statement->bindParam(':theTime', $theTime, PDO::PARAM_STR, 12);
 
     $success = $statement->execute();
 

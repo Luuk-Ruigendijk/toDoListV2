@@ -5,7 +5,6 @@ function loadLists(){
 		document.getElementById('allLists').innerHTML = "";
 	    if (this.readyState == 4 && this.status == 200) {
 	    	lists = JSON.parse(this.response);
-	    	console.dir(lists);
 	    	for(list of lists){
 	    		let newList = document.createElement('div');
 	    		let addListName = document.createElement('h2');
@@ -36,6 +35,39 @@ function loadLists(){
 	xmlhttp.send();
 }
 
+/**
+	LoadTasks ..... purpose
+
+
+
+*/
+
+/**
+ * Description of this function.
+ * 
+ * @param {string}      name 
+ * @param {Date}        birthday 
+ * @param {boolean=}    isMarried       Optional parameter.
+ * @param {string|null} [bloodType]
+ * @param {number=}     [weight=0]      Optional parameter with default value.
+ * @param {string[]}    favoriteFoods   Array of String.
+ * 
+ * @returns {Object}
+ 
+
+/*function Person(name, birthday, isMarried, bloodType = null, weight = 0, favoriteFoods = []) {
+  return {
+    name,
+    birthday,
+    weight,
+    bloodType,
+    isMarried,
+    favoriteFoods,
+  }
+}
+
+*/
+
 function loadTasks(){
 	var mainList = document.getElementById('allLists');
 	var xmlhttp = new XMLHttpRequest();
@@ -50,10 +82,19 @@ function loadTasks(){
 							newTaskElement.innerHTML = task.taskname;
 							list.appendChild(newTaskElement);
 
+							let timeRequired = document.createElement('div');
+							timeRequired.innerHTML = "time to complete:" + task.requiredTime;
+							list.appendChild(timeRequired);
+
 							let renameTaskButton = document.createElement('button');
 				    		renameTaskButton.innerHTML = "rename task";
 				    		renameTaskButton.setAttribute("onclick", "renameTask("+task.id+")");
 				    		list.appendChild(renameTaskButton);
+
+				    		let retimeTaskButton = document.createElement('button');
+				    		retimeTaskButton.innerHTML = "change task time";
+				    		retimeTaskButton.setAttribute("onclick", "retimeTask("+task.id+")");
+				    		list.appendChild(retimeTaskButton);
 
 				    		let removeTaskButton = document.createElement('button');
 				    		removeTaskButton.innerHTML = "remove task";
@@ -94,15 +135,24 @@ function addTask(listsId){
   		 alert("Please insert a name.");
   	}
   	else {
-  		var xmlhttp = new XMLHttpRequest();
-    	xmlhttp.onreadystatechange = function() {
-      		if (this.readyState == 4 && this.status == 200) {
-      			loadLists();
-      		}
-    	};
-    xmlhttp.open("GET", "addTask.php?theName="+taskNamePrompt+"&listsId="+listsId);
-    xmlhttp.send();
+  		var taskTimePrompt = prompt("Please enter the time in minutes for the new task.", 15);
+  		var timeInMinutes = parseInt(taskTimePrompt);
+  		var roundedTime = Math.round(timeInMinutes);
+		if (roundedTime == null || roundedTime == "" || roundedTime == NaN) {
+	  		alert("Please insert a time in minutes.");
+	  	}
+	  	else {
+  			var xmlhttp = new XMLHttpRequest();
+	    	xmlhttp.onreadystatechange = function() {
+	      		if (this.readyState == 4 && this.status == 200) {
+	      			loadLists();
+	      		}
+	    	};
+	    	xmlhttp.open("GET", "addTask.php?theName="+taskNamePrompt+"&listsId="+listsId+"&theTime="+roundedTime);
+    		xmlhttp.send();
+	  	}
   	}
+    
 }
 
 function renameList(listsId){
@@ -136,6 +186,25 @@ function renameTask(id){
     	};
     xmlhttp.open("GET", "renameTask.php?theName="+taskNamePrompt+"&id="+id);
     xmlhttp.send();
+  	}
+}
+
+function retimeTask(id){
+	var taskTimePrompt = prompt("Please enter the time in minutes for the new task.", 15);
+	var timeInMinutes = parseInt(taskTimePrompt);
+	var roundedTime = Math.round(timeInMinutes);
+	if (roundedTime == null || roundedTime == "" || roundedTime == NaN) {
+  		alert("Please insert a time in minutes.");
+  	}
+  	else {
+			var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.onreadystatechange = function() {
+      		if (this.readyState == 4 && this.status == 200) {
+      			loadLists();
+      		}
+    	};
+    	xmlhttp.open("GET", "addTask.php?theName="+taskNamePrompt+"&listsId="+listsId+"&theTime="+roundedTime);
+		xmlhttp.send();
   	}
 }
 
