@@ -197,13 +197,13 @@ function retimeTask(id){
   		alert("Please insert a time in minutes.");
   	}
   	else {
-			var xmlhttp = new XMLHttpRequest();
+		var xmlhttp = new XMLHttpRequest();
     	xmlhttp.onreadystatechange = function() {
       		if (this.readyState == 4 && this.status == 200) {
       			loadLists();
       		}
     	};
-    	xmlhttp.open("GET", "addTask.php?theName="+taskNamePrompt+"&listsId="+listsId+"&theTime="+roundedTime);
+    	xmlhttp.open("GET", "retimeTask.php?id="+id+"&theTime="+roundedTime);
 		xmlhttp.send();
   	}
 }
