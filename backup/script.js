@@ -68,7 +68,7 @@ function loadLists(){
 
 */
 
-function loadTasks(requiredStatus){
+function loadTasks(){
 	var mainList = document.getElementById('allLists');
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
