@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<div>
+			<button onclick="sortTime()">Niet werkende prototype voor sorteren op tijd</button>
 			<h1>Sort by status</h1>
 			<button onclick="insertFilter()">See all</button>
 			<button onclick="insertFilter('unstarted')">Not yet started</button>

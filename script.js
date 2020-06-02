@@ -100,17 +100,25 @@ function loadTasks(){
 }
 
 function createTasks(list, task){
-	let newTaskElement = document.createElement('div');
-	newTaskElement.innerHTML = task.taskname;
-	list.appendChild(newTaskElement);
+	let taskDiv = document.createElement('div');
+	list.appendChild(taskDiv);
+	taskDiv.classList.add("listOfTasks");
 
-	let timeRequired = document.createElement('div');
-	timeRequired.innerHTML = "Time to complete:" + task.requiredTime;
-	list.appendChild(timeRequired);
+	let newTaskElement = document.createElement('h3');
+	newTaskElement.innerHTML = task.taskname;
+	taskDiv.appendChild(newTaskElement);
+
+	let timeRequiredText = document.createElement('div');
+	timeRequiredText.innerHTML = "Time to complete: ";
+	taskDiv.appendChild(timeRequiredText);
+
+	let timeRequiredNumbers = document.createElement('li');
+	timeRequiredNumbers.innerHTML = task.requiredTime;
+	timeRequiredText.appendChild(timeRequiredNumbers);
 
 	let dropdownTaskStatus = document.createElement('div');
 	dropdownTaskStatus.classList.add("dropdown");
-	list.appendChild(dropdownTaskStatus);
+	taskDiv.appendChild(dropdownTaskStatus);
 
 	let taskStatus = document.createElement('div');
 	taskStatus.innerHTML = "Status:" + task.status;
@@ -138,17 +146,17 @@ function createTasks(list, task){
 	let renameTaskButton = document.createElement('button');
 	renameTaskButton.innerHTML = "Rename task";
 	renameTaskButton.setAttribute("onclick", "renameTask("+task.id+")");
-	list.appendChild(renameTaskButton);
+	taskDiv.appendChild(renameTaskButton);
 
 	let retimeTaskButton = document.createElement('button');
 	retimeTaskButton.innerHTML = "Change task time";
 	retimeTaskButton.setAttribute("onclick", "retimeTask("+task.id+")");
-	list.appendChild(retimeTaskButton);
+	taskDiv.appendChild(retimeTaskButton);
 
 	let removeTaskButton = document.createElement('button');
 	removeTaskButton.innerHTML = "Remove task";
 	removeTaskButton.setAttribute("onclick", "removeTask("+task.id+")");
-	list.appendChild(removeTaskButton);
+	taskDiv.appendChild(removeTaskButton);
 }
 
 loadLists()
@@ -298,4 +306,57 @@ function setStatus(id, status){
 	};
     xmlhttp.open("GET", "setStatus.php?id="+id+"&status="+status);
     xmlhttp.send();
+}
+
+function sortTime(){
+	/*var timeList, i, switching, b, shouldSwitch, dir, switchcount = 0;
+    timeList = document.getElementById("8");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc"; 
+    // Make a loop that will continue until no switching has been done:
+    while (switching) {
+	    // start by saying: no switching is done:
+	    switching = false;
+	    b = timeList.getElementsByTagName("LI");
+	    // Loop through all timeList-items:
+	    for (i = 0; i < (b.length - 1); i++) {
+	    	//start by saying there should be no switching:
+	    	shouldSwitch = false;
+	    	// check if the next item should switch place with the current item,
+	    	//based on the sorting direction (asc or desc): 
+	    	if (dir == "asc") {
+		        if (Number(b[i].innerHTML) > Number(b[i + 1].innerHTML)) {
+		          // if next item is alphabetically lower than current item,
+		          //mark as a switch and break the loop: 
+		          shouldSwitch = true;
+		          break;
+		        }
+	        } 
+	        else if (dir == "desc") {
+		        if (Number(b[i].innerHTML) < Number(b[i + 1].innerHTML)) {
+		            // if next item is alphabetically higher than current item,
+		            //mark as a switch and break the loop: 
+		            shouldSwitch= true;
+		            break;
+		        }
+	        }
+	    }
+	    if (shouldSwitch) {
+	        // If a switch has been marked, make the switch
+	        //and mark that a switch has been done: 
+	        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+	        switching = true;
+	        // Each time a switch is done, increase switchcount by 1:
+	        switchcount ++;
+	    } 
+	    else {
+	        // If no switching has been done AND the direction is "asc",
+	        //set the direction to "desc" and run the while loop again. 
+	        if (switchcount == 0 && dir == "asc") {
+		        dir = "desc";
+		        switching = true;
+	        }
+	    }
+    }*/
 }
