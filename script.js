@@ -1,6 +1,11 @@
+var currentFilter;
+
+function insertFilter(requiredStatus){
+	currentFilter = requiredStatus;
+	loadLists();
+}
 function loadLists(){
 	var xmlhttp = new XMLHttpRequest();
-
 	xmlhttp.onreadystatechange = function() {
 		document.getElementById('allLists').innerHTML = "";
 	    if (this.readyState == 4 && this.status == 200) {
@@ -68,7 +73,7 @@ function loadLists(){
 
 */
 
-function loadTasks(requiredStatus){
+function loadTasks(){
 	var mainList = document.getElementById('allLists');
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -78,55 +83,12 @@ function loadTasks(requiredStatus){
 		    	for (let list of mainList.childNodes){
 		    		for (let task of tasks){
 		    			if (task.listsId == list.id) {
-		    				let newTaskElement = document.createElement('div');
-							newTaskElement.innerHTML = task.taskname;
-							list.appendChild(newTaskElement);
-
-							let timeRequired = document.createElement('div');
-							timeRequired.innerHTML = "Time to complete:" + task.requiredTime;
-							list.appendChild(timeRequired);
-
-							let dropdownTaskStatus = document.createElement('div');
-							dropdownTaskStatus.classList.add("dropdown");
-							list.appendChild(dropdownTaskStatus);
-
-							let taskStatus = document.createElement('div');
-							taskStatus.innerHTML = "Status:" + task.status;
-							dropdownTaskStatus.appendChild(taskStatus);
-
-							let statusCollection = document.createElement('div');
-							statusCollection.classList.add("dropdown-content");
-							dropdownTaskStatus.appendChild(statusCollection);
-
-							let statusUnstarted = document.createElement('p');
-							statusUnstarted.innerHTML = "Not yet started";
-							statusUnstarted.setAttribute("onclick", "setStatus("+task.id+", 'unstarted')");
-							statusCollection.appendChild(statusUnstarted);
-
-							let statusStarted = document.createElement('p');
-							statusStarted.innerHTML = "Started";
-							statusStarted.setAttribute("onclick", "setStatus("+task.id+", 'started')");
-							statusCollection.appendChild(statusStarted);
-
-							let statusFinished = document.createElement('p');
-							statusFinished.innerHTML = "Finished";
-							statusFinished.setAttribute("onclick", "setStatus("+task.id+", 'finished')");
-							statusCollection.appendChild(statusFinished);
-
-							let renameTaskButton = document.createElement('button');
-				    		renameTaskButton.innerHTML = "Rename task";
-				    		renameTaskButton.setAttribute("onclick", "renameTask("+task.id+")");
-				    		list.appendChild(renameTaskButton);
-
-				    		let retimeTaskButton = document.createElement('button');
-				    		retimeTaskButton.innerHTML = "Change task time";
-				    		retimeTaskButton.setAttribute("onclick", "retimeTask("+task.id+")");
-				    		list.appendChild(retimeTaskButton);
-
-				    		let removeTaskButton = document.createElement('button');
-				    		removeTaskButton.innerHTML = "Remove task";
-				    		removeTaskButton.setAttribute("onclick", "removeTask("+task.id+")");
-				    		list.appendChild(removeTaskButton);
+		    				if (currentFilter==undefined) {
+		    					createTasks(list, task);
+		    				}
+		    				else if (task.status==currentFilter) {
+		    					createTasks(list, task);
+		    				}
 		    			}
 		    		}
 		    	}
@@ -135,6 +97,58 @@ function loadTasks(requiredStatus){
 	}
 	xmlhttp.open("GET", "loadTasks.php");
     xmlhttp.send();
+}
+
+function createTasks(list, task){
+	let newTaskElement = document.createElement('div');
+	newTaskElement.innerHTML = task.taskname;
+	list.appendChild(newTaskElement);
+
+	let timeRequired = document.createElement('div');
+	timeRequired.innerHTML = "Time to complete:" + task.requiredTime;
+	list.appendChild(timeRequired);
+
+	let dropdownTaskStatus = document.createElement('div');
+	dropdownTaskStatus.classList.add("dropdown");
+	list.appendChild(dropdownTaskStatus);
+
+	let taskStatus = document.createElement('div');
+	taskStatus.innerHTML = "Status:" + task.status;
+	dropdownTaskStatus.appendChild(taskStatus);
+
+	let statusCollection = document.createElement('div');
+	statusCollection.classList.add("dropdown-content");
+	dropdownTaskStatus.appendChild(statusCollection);
+
+	let statusUnstarted = document.createElement('p');
+	statusUnstarted.innerHTML = "Not yet started";
+	statusUnstarted.setAttribute("onclick", "setStatus("+task.id+", 'unstarted')");
+	statusCollection.appendChild(statusUnstarted);
+
+	let statusStarted = document.createElement('p');
+	statusStarted.innerHTML = "Started";
+	statusStarted.setAttribute("onclick", "setStatus("+task.id+", 'started')");
+	statusCollection.appendChild(statusStarted);
+
+	let statusFinished = document.createElement('p');
+	statusFinished.innerHTML = "Finished";
+	statusFinished.setAttribute("onclick", "setStatus("+task.id+", 'finished')");
+	statusCollection.appendChild(statusFinished);
+
+	let renameTaskButton = document.createElement('button');
+	renameTaskButton.innerHTML = "Rename task";
+	renameTaskButton.setAttribute("onclick", "renameTask("+task.id+")");
+	list.appendChild(renameTaskButton);
+
+	let retimeTaskButton = document.createElement('button');
+	retimeTaskButton.innerHTML = "Change task time";
+	retimeTaskButton.setAttribute("onclick", "retimeTask("+task.id+")");
+	list.appendChild(retimeTaskButton);
+
+	let removeTaskButton = document.createElement('button');
+	removeTaskButton.innerHTML = "Remove task";
+	removeTaskButton.setAttribute("onclick", "removeTask("+task.id+")");
+	list.appendChild(removeTaskButton);
 }
 
 loadLists()
