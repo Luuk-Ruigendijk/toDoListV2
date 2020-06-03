@@ -350,13 +350,13 @@ function setStatus(id, status){
 */
 function sortTime(){
 	if (pressed==0) {
-		document.getElementById("sortButton").innerHTML="Sort by time (descending)";
+		document.getElementById("sortButton").innerHTML="Sort by time (ascending)";
 		loadLists(" DESC");
 		pressed++;
 	}
 	else {
 		pressed=0;
-		document.getElementById("sortButton").innerHTML="Sort by time (ascending)";
+		document.getElementById("sortButton").innerHTML="Sort by time (descending)";
 		loadLists(" ASC");
 	}
 }
