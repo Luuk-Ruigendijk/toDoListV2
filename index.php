@@ -6,12 +6,13 @@
 	</head>
 	<body>
 		<div>
-			<button onclick="sortTime()">Niet werkende prototype voor sorteren op tijd</button>
-			<h1>Sort by status</h1>
+			<h1>filter by status</h1>
 			<button onclick="insertFilter()">See all</button>
 			<button onclick="insertFilter('unstarted')">Not yet started</button>
 			<button onclick="insertFilter('started')">Started</button>
 			<button onclick="insertFilter('finished')">Finished</button>
+			<h1>sort by time</h1>
+			<button id="sortButton" onclick="sortTime()">Sort by time (descending)</button>
 		</div>
 		<br>
 		<div id="allLists">

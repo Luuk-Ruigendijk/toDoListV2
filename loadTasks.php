@@ -16,9 +16,15 @@
        
         }
 
-        $sql = 'SELECT * FROM tasks';
+        $sortingDirection =(isset($_GET['sortingDirection']))?$_GET['sortingDirection'] : " ASC";
 
-        $statement = $conn->prepare($sql);	
+        $sql = 'SELECT * FROM tasks ORDER BY requiredTime';
+
+        $sql = $sql . $sortingDirection;
+
+        $statement = $conn->prepare($sql);
+
+        $statement->bindParam(':sortingDirection', $sortingDirection, PDO::PARAM_STR, 12);
 
         $statement->execute();
 
