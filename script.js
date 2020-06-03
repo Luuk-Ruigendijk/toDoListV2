@@ -1,10 +1,19 @@
 var currentFilter;
 var pressed = 0;
 
+/*
+	this function is called when a filter is applied, setting the variable currentFilter 
+	to the status that needs to be shown. Afterwards it starts the function loadLists()
+*/
 function insertFilter(requiredStatus){
 	currentFilter = requiredStatus;
 	loadLists();
 }
+
+/*
+	this function retrieves the lists stored on the database, and creates the lists in the 
+	webpage. 
+*/
 function loadLists(sortingDirection){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -41,39 +50,10 @@ function loadLists(sortingDirection){
 	xmlhttp.send();
 }
 
-/**
-	LoadTasks ..... purpose
-
-
-
+/*
+	this function gets the JSON of the tasks, and based on whether or not a filter has been added, 
+	only loads tasks with the current filter attached.
 */
-
-/**
- * Description of this function.
- * 
- * @param {string}      name 
- * @param {Date}        birthday 
- * @param {boolean=}    isMarried       Optional parameter.
- * @param {string|null} [bloodType]
- * @param {number=}     [weight=0]      Optional parameter with default value.
- * @param {string[]}    favoriteFoods   Array of String.
- * 
- * @returns {Object}
- 
-
-/*function Person(name, birthday, isMarried, bloodType = null, weight = 0, favoriteFoods = []) {
-  return {
-    name,
-    birthday,
-    weight,
-    bloodType,
-    isMarried,
-    favoriteFoods,
-  }
-}
-
-*/
-
 function loadTasks(sortingDirection){
 	var mainList = document.getElementById('allLists');
 	var xmlhttp = new XMLHttpRequest();
@@ -109,6 +89,9 @@ function loadTasks(sortingDirection){
     
 }
 
+/*
+	in this function the tasks are created and added into the previously created lists.
+*/
 function createTasks(list, task){
 	let taskDiv = document.createElement('div');
 	list.appendChild(taskDiv);
@@ -169,8 +152,15 @@ function createTasks(list, task){
 	taskDiv.appendChild(removeTaskButton);
 }
 
+/*
+	as seen here, the lists and tasks are automatically loaded once the page has been opened
+*/
 loadLists()
 
+/*
+	this function adds a list to the database, after which it starts the loadLists() function,
+	adding the new list immediatly to the webpage
+*/
 function addList(){
 	var tableNamePrompt = prompt("Please enter the name of the new list.", "New list");
 	if (tableNamePrompt == null || tableNamePrompt == "") {
@@ -188,6 +178,10 @@ function addList(){
   	}
 }
 
+/*
+	this function adds a task to the database, after which it starts the loadLists() function,
+	adding the new task immediatly to the webpage
+*/
 function addTask(listsId){
 	var taskNamePrompt = prompt("Please enter the name of the new task.", "New task");
 	if (taskNamePrompt == null || taskNamePrompt == "") {
@@ -213,6 +207,11 @@ function addTask(listsId){
   	}
 }
 
+/*
+	this function renames a list and notifies the database, 
+	after which it starts the loadLists() function,
+	changing the name immediatly on the webpage
+*/
 function renameList(listsId){
 	var listNamePrompt = prompt("Please enter the new name of this list.", "Different name");
 	if (listNamePrompt == null || listNamePrompt == "") {
@@ -230,6 +229,11 @@ function renameList(listsId){
   	}
 }
 
+/*
+	this function renames a task and notifies the database, 
+	after which it starts the loadLists() function,
+	changing the name immediatly on the webpage
+*/
 function renameTask(id){
 	var taskNamePrompt = prompt("Please enter the new name of this task.", "Different name");
 	if (taskNamePrompt == null || taskNamePrompt == "") {
@@ -247,6 +251,11 @@ function renameTask(id){
   	}
 }
 
+/*
+	this function changes the time a task takes and notifies the database, 
+	after which it starts the loadLists() function,
+	changing the time immediatly on the webpage
+*/
 function retimeTask(id){
 	var taskTimePrompt = prompt("Please enter the time in minutes for the new task.", 15);
 	var timeInMinutes = parseInt(taskTimePrompt);
@@ -266,6 +275,11 @@ function retimeTask(id){
   	}
 }
 
+/*
+	this function removes a list from the database, 
+	after which it starts the removeListTasks() function,
+	removing the tasks related to the list
+*/
 function removeList(list){
 	let listRemoval = document.getElementById(list);
 	if (listRemoval.hasChildNodes() === true) {
@@ -284,6 +298,10 @@ function removeList(list){
     xmlhttp.send();
 }
 
+/*
+	this function removes all tasks related to a deleted list, after which
+	it starts the loadLists() function, removing the list from the webpage
+*/
 function removeListTasks(list){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -295,6 +313,11 @@ function removeListTasks(list){
     xmlhttp.send();
 }
 
+/*
+	this function removes a task from the database, 
+	after which it starts the loadLists() function,
+	showing the webpage with the task removed
+*/
 function removeTask(id){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -306,6 +329,10 @@ function removeTask(id){
     xmlhttp.send();
 }
 
+/*
+	this function changes the status a task has and alters in the database,
+	after which it starts the loadLists() function, showing the new status a function has
+*/
 function setStatus(id, status){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -316,16 +343,10 @@ function setStatus(id, status){
     xmlhttp.open("GET", "setStatus.php?id="+id+"&status="+status);
     xmlhttp.send();
 }
+
 /*
-PHP ORDER BY
-
-if ($_GET['sorting']=="asc"){
-
-}
-
-onthoud hoe isset werkt
-
-leer over php sort, specifiek usort
+	this function changes the direction a list is sorted from, alternating between ascending
+	and descending, based on the amount of minutes a task takes.
 */
 function sortTime(){
 	if (pressed==0) {
