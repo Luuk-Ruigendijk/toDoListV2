@@ -201,7 +201,6 @@ function addTask(listsId){
     		xmlhttp.send();
 	  	}
   	}
-    
 }
 
 function renameList(listsId){
@@ -307,6 +306,16 @@ function setStatus(id, status){
     xmlhttp.open("GET", "setStatus.php?id="+id+"&status="+status);
     xmlhttp.send();
 }
+
+PHP ORDER BY
+
+if ($_GET['sorting']=="asc"){
+
+}
+
+onthoud hoe isset werkt
+
+leer over php sort, specifiek usort
 
 function sortTime(){
 	/*var timeList, i, switching, b, shouldSwitch, dir, switchcount = 0;
