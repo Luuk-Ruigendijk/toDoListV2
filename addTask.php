@@ -17,6 +17,7 @@
     catch(PDOException $e){
 
     }
+    
     $theName = $_GET['theName'];
     $listsId = $_GET['listsId'];
     $theTime = $_GET['theTime'];
