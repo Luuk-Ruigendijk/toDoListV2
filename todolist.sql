@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `lists` (
   `listsId` int(11) NOT NULL AUTO_INCREMENT,
   `listname` varchar(250) NOT NULL,
   PRIMARY KEY (`listsId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `taskname` varchar(250) NOT NULL,
   `listsId` int(11) NOT NULL,
   `requiredTime` int(11) NOT NULL,
-  `status` varchar(250) NOT NULL DEFAULT 'not started',
+  `status` varchar(250) NOT NULL DEFAULT 'unstarted',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
